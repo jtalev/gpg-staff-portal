@@ -1,24 +1,18 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/jtalev/gpg-staff-portal/api"
 )
 
 func main() {
 
 	r := mux.NewRouter()
 
-	h1 := func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode("Hello Geelong Paint Group employee!")
-	}
-
-	r.HandleFunc("/", h1)
-
-	
+	api.SetupRoutes(r)
 
 	log.Println("Starting server on port 8000")
 	if err := http.ListenAndServe(":8000", r); err != nil {

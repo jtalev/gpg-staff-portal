@@ -1,8 +1,14 @@
 package api
 
-import "github.com/gorilla/mux"
+import (
+	"github.com/gorilla/mux"
+)
 
 func SetupRoutes(r *mux.Router) {
+
+	// web
+	r.HandleFunc("/", nil)
+
 	// user
 	r.HandleFunc("/user", nil).Methods("GET")
 	r.HandleFunc("/user/{id}", nil).Methods("GET")
