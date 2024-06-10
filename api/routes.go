@@ -8,10 +8,10 @@ import (
 func SetupRoutes(r *mux.Router) {
 
 	// web
-	r.HandleFunc("/", handler.LoginHandler)
+	r.HandleFunc("/login", handler.LoginHandler)
 	r.HandleFunc("/home", handler.HomeHandler)
-	// r.HandleFunc("/clock-on", handler.ClockOnHandler)
-	// r.HandleFunc("/leave", handler.LeaveHandler)
+	r.HandleFunc("/clock-on", handler.ClockOnHandler)
+	r.HandleFunc("/leave", handler.LeaveHandler)
 
 	// user
 	r.HandleFunc("/user", nil).Methods("GET")
