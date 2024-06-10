@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 )
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	path := filepath.Join("..", "..", "web", "static")
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	path := filepath.Join("..", "..", "web", "static", "login.html")
 	log.Println(path)
 
 	http.ServeFile(w, r, path)
