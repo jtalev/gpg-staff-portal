@@ -2,12 +2,16 @@ package api
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/jtalev/gpg-staff-portal/api/handler"
 )
 
 func SetupRoutes(r *mux.Router) {
 
 	// web
-	r.HandleFunc("/", nil)
+	r.HandleFunc("/", handler.LoginHandler)
+	r.HandleFunc("/home", handler.HomeHandler)
+	// r.HandleFunc("/clock-on", handler.ClockOnHandler)
+	// r.HandleFunc("/leave", handler.LeaveHandler)
 
 	// user
 	r.HandleFunc("/user", nil).Methods("GET")
