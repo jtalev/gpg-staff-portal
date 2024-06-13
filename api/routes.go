@@ -14,12 +14,12 @@ func SetupRoutes(r *mux.Router) {
 	r.HandleFunc("/leave", handler.LeaveHandler)
 
 	// user
-	r.HandleFunc("/user", nil).Methods("GET")
-	r.HandleFunc("/user/{id}", nil).Methods("GET")
-	r.HandleFunc("/user/{employeeId}", nil).Methods("GET")
-	r.HandleFunc("/user/create", nil).Methods("POST")
-	r.HandleFunc("/user/update", nil).Methods("PUT")
-	r.HandleFunc("/user/delete", nil).Methods("DELETE")
+	r.HandleFunc("/user", handler.GetUsersHandler).Methods("GET")
+	r.HandleFunc("/user/{id}", handler.GetUserByIdHandler).Methods("GET")
+	r.HandleFunc("/user/{employeeId}", handler.GetUserByEmployeeIdHandler).Methods("GET")
+	r.HandleFunc("/user/create", handler.CreateUserHandler).Methods("POST")
+	r.HandleFunc("/user/update/{id}", handler.UpdateUserHandler).Methods("PUT")
+	r.HandleFunc("/user/delete/{id}", handler.DeleteUserHandler).Methods("DELETE")
 
 	// timesheet
 
