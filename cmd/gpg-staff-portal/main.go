@@ -23,6 +23,7 @@ func main() {
 	var PORT = getEnvVariable("PORT")
 	r := mux.NewRouter()
 
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("../../web/static"))))
 	api.SetupRoutes(r)
 
 	log.Println("Starting server on port:", PORT)

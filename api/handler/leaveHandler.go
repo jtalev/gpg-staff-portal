@@ -6,6 +6,6 @@ import (
 )
 
 func LeaveHandler(w http.ResponseWriter, r *http.Request) {
-	path := filepath.Join("..", "..", "web", "static", "leave.html")
+	path := filepath.Join("..", "..", "web", "pages", "leave.html")
 	http.ServeFile(w, r, path)
 }
