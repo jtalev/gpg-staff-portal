@@ -6,6 +6,7 @@ import (
 )
 
 func SetupRoutes(r *mux.Router) {
+	u := handler.UserHandler{}
 
 	// web
 	r.HandleFunc("/", handler.LoginHandler)
@@ -14,12 +15,12 @@ func SetupRoutes(r *mux.Router) {
 	r.HandleFunc("/leave", handler.LeaveHandler)
 
 	// user
-	r.HandleFunc("/user", handler.GetUsersHandler).Methods("GET")
-	r.HandleFunc("/user/{id}", handler.GetUserByIdHandler).Methods("GET")
-	r.HandleFunc("/user/{employeeId}", handler.GetUserByEmployeeIdHandler).Methods("GET")
-	r.HandleFunc("/user/create", handler.CreateUserHandler).Methods("POST")
-	r.HandleFunc("/user/update/{id}", handler.UpdateUserHandler).Methods("PUT")
-	r.HandleFunc("/user/delete/{id}", handler.DeleteUserHandler).Methods("DELETE")
+	r.HandleFunc("/user", u.GetUsersHandler).Methods("GET")
+	r.HandleFunc("/user/{id}", u.GetUserByIdHandler).Methods("GET")
+	r.HandleFunc("/user/{employeeId}", u.GetUserByEmployeeIdHandler).Methods("GET")
+	r.HandleFunc("/user/create", u.CreateUserHandler).Methods("POST")
+	r.HandleFunc("/user/update/{id}", u.UpdateUserHandler).Methods("PUT")
+	r.HandleFunc("/user/delete/{id}", u.DeleteUserHandler).Methods("DELETE")
 
 	// timesheet
 

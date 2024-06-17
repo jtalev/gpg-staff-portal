@@ -36,8 +36,8 @@ func TestGetUserData(t *testing.T) {
 	}
 
 	got, _ := mockdb.GetUserData()
-	if !reflect.DeepEqual(got, &data) {
-		t.Errorf("GetUserData() = %v; want %v", got, &data)
+	if !reflect.DeepEqual(got, data) {
+		t.Errorf("GetUserData() = %v; want %v", got, data)
 	}
 }
 

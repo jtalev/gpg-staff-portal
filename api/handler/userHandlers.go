@@ -14,7 +14,9 @@ import (
 	"github.com/jtalev/gpg-staff-portal/internal/mockdb"
 )
 
-func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
+type UserHandler struct {}
+
+func(u UserHandler) GetUsersHandler(w http.ResponseWriter, r *http.Request) {
 	users, _ := mockdb.GetUserData()
 
 	path := filepath.Join("..", "..", "web", "tmpl", "userList.html")
@@ -29,7 +31,7 @@ func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
+func(u UserHandler) GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
 	
 	vars := mux.Vars(r)
 	idStr := vars["id"]
@@ -47,7 +49,7 @@ func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(msg)
 }
 
-func GetUserByEmployeeIdHandler(w http.ResponseWriter, r *http.Request) {
+func(u UserHandler) GetUserByEmployeeIdHandler(w http.ResponseWriter, r *http.Request) {
 	
 	vars := mux.Vars(r)
 	empIdStr := vars["employeeId"]
@@ -65,7 +67,7 @@ func GetUserByEmployeeIdHandler(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(msg)
 }
 
-func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
+func(u UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	var user entities.User
 
 	if r.Header.Get("Content-Type") != "application/json" {
@@ -92,7 +94,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(msg)
 }
 
-func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
+func(u UserHandler) UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 
@@ -121,7 +123,7 @@ func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(msg)
 }
 
-func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
+func(u UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 
