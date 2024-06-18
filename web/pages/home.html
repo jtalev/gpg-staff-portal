@@ -5,10 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
     <title>Home - GPG</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
-    <h1>Home Page</h1>
-    <div hx-get="/user" hx-trigger="load">
+    <div class="icon-container">
+        <div class="top-icons">
+            <a href="/clock-on">
+                <div class="icon">
+                    <img src="../static/images/clock.svg" alt="clock icon">
+                    <p>clock on</p>
+                </div>
+            </a>
+            <a href="/leave">
+                <div class="icon">
+                    <img src="../static/images/leave.svg" alt="leave icon">
+                    <p>leave request</p>
+                </div>
+            </a>
+        </div>
+        <div class="bottom-icon">
+            <a href="/profile">
+                <div class="icon">
+                    <img src="../static/images/profile.svg" alt="profile icon">
+                    <p>profile</p>
+                </div>
+            </a>
+        </div>
     </div>
 </body>
 </html>
