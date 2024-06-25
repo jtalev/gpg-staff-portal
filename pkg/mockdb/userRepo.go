@@ -3,12 +3,11 @@ package mockdb
 import (
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/internal/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/entities"
 )
 
-func GetUserData() ([]entities.User, string) {
-
-	robbie := entities.User{
+var users = []entities.User{
+	{
 		Uid:          0,
 		EmployeeId:   000000,
 		FirstName:    "Robbie",
@@ -17,8 +16,8 @@ func GetUserData() ([]entities.User, string) {
 		PasswordHash: "blsbdjksd65452",
 		CreatedAt:    time.Now(),
 		ModifiedAt:   time.Now(),
-	}
-	ronnie := entities.User{
+	},
+	{
 		Uid:          1,
 		EmployeeId:   000001,
 		FirstName:    "Ronnie",
@@ -27,19 +26,15 @@ func GetUserData() ([]entities.User, string) {
 		PasswordHash: "kjbslkbsdk6+23",
 		CreatedAt:    time.Now(),
 		ModifiedAt:   time.Now(),
-	}
-	data := []entities.User{
-		robbie,
-		ronnie,
-	}
+	},
+}
 
-	return data, "Successfully fetched users"
+func GetUserData() ([]entities.User, error) {
+	return users, nil
 }
 
 func GetUserById(id int) (*entities.User, string) {
-
-	data, _ := GetUserData()
-	for _, user := range data {
+	for _, user := range users {
 		if user.Uid == id {
 			return &user, "Successfully fetched user"
 		}
@@ -49,9 +44,7 @@ func GetUserById(id int) (*entities.User, string) {
 }
 
 func GetUserByEmployeeId(employeeId int) (*entities.User, string) {
-
-	data, _ := GetUserData()
-	for _, user := range data {
+	for _, user := range users {
 		if user.EmployeeId == employeeId {
 			return &user, "Successfully fetched user"
 		}
@@ -61,9 +54,7 @@ func GetUserByEmployeeId(employeeId int) (*entities.User, string) {
 }
 
 func CreateUser(user entities.User) (*[]entities.User, string) {
-
-	data, _ := GetUserData()
-	for _, item := range data {
+	for _, item := range users {
 		if user.EmployeeId == item.EmployeeId {
 			return nil, "Employee ID already exists"
 		}
@@ -72,16 +63,14 @@ func CreateUser(user entities.User) (*[]entities.User, string) {
 		}
 	}
 
-	data = append(data, user)
-	return &data, "Successfully created user"
+	users = append(users, user)
+	return &users, "Successfully created user"
 }
 
 func UpdateUser(user entities.User, id int) (*entities.User, string) {
-
-	data, _ := GetUserData()
-	for i, item := range data {
+	for i, item := range users {
 		if id == item.Uid {
-			data[i] = user
+			users[i] = user
 			return &user, "User successfully updated"
 		}
 	}
@@ -89,14 +78,12 @@ func UpdateUser(user entities.User, id int) (*entities.User, string) {
 }
 
 func DeleteUser(id int) (*[]entities.User, string) {
-
-	data, _ := GetUserData()
-	for i, user := range data {
+	for i, user := range users {
 		if user.Uid == id {
-			before := data[:i]
-			after := data[i+1:]
-			data = append(before, after...)
-			return &data, "User successfully deleted"
+			before := users[:i]
+			after := users[i+1:]
+			users = append(before, after...)
+			return &users, "User successfully deleted"
 		}
 	}
 	return nil, "User doesn't exist"

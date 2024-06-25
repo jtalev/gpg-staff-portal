@@ -3,10 +3,10 @@ package mockdb
 import (
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/internal/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/entities"
 )
 
-var lrList = []entities.LeaveRequest{
+var leaveRequests = []entities.LeaveRequest{
 	{
 		Id:         0,
 		EmployeeId: 000000,
@@ -32,14 +32,12 @@ var lrList = []entities.LeaveRequest{
 }
 
 func GetAllLeaveRequests() (l *[]entities.LeaveRequest, msg string) {
-	
-	return &lrList, "Successfully fetched leave requests"
+	return &leaveRequests, "Successfully fetched leave requests"
 }
 
 func GetLeaveRequestsByEmployeeId(empId int) (l *[]entities.LeaveRequest, msg string) {
-
 	list := make([]entities.LeaveRequest, 0)
-	for _, lr := range lrList {
+	for _, lr := range leaveRequests {
 		if lr.EmployeeId == empId {
 			list = append(list, lr)
 		}
@@ -52,22 +50,20 @@ func GetLeaveRequestsByEmployeeId(empId int) (l *[]entities.LeaveRequest, msg st
 }
 
 func CreateLeaveRequest(lr entities.LeaveRequest) (l *entities.LeaveRequest, msg string) {
-
-	for _, r := range lrList {
+	for _, r := range leaveRequests {
 		if r.Id == lr.Id {
 			return nil, "This leave request already exists"
 		}
 	}
 
-	lrList = append(lrList, lr)
+	leaveRequests = append(leaveRequests, lr)
 	return &lr, "Successfully created leave request"
 }
 
 func UpdateLeaveRequest(lr entities.LeaveRequest, id int) (l *entities.LeaveRequest, msg string) {
-
-	for i, r := range lrList {
+	for i, r := range leaveRequests {
 		if r.Id == id {
-			lrList[i] = lr
+			leaveRequests[i] = lr
 			return &lr, "successfully updated leave request"
 		}
 	}
@@ -76,13 +72,12 @@ func UpdateLeaveRequest(lr entities.LeaveRequest, id int) (l *entities.LeaveRequ
 }
 
 func DeleteLeaveRequest(id int) (l *[]entities.LeaveRequest, msg string) {
-
-	for i, r := range lrList {
+	for i, r := range leaveRequests {
 		if r.Id == id {
-			before := lrList[:i]
-			after := lrList[i+1:]
-			lrList = append(before, after...)
-			return &lrList, "Successfully deleted leave request"
+			before := leaveRequests[:i]
+			after := leaveRequests[i+1:]
+			leaveRequests = append(before, after...)
+			return &leaveRequests, "Successfully deleted leave request"
 		}
 	}
 	return nil, "No leave request with given id"

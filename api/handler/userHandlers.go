@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/jtalev/gpg-staff-portal/internal/entities"
-	"github.com/jtalev/gpg-staff-portal/internal/mockdb"
+	"github.com/jtalev/gpg-staff-portal/pkg/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/mockdb"
 )
 
 type UserHandler struct {}

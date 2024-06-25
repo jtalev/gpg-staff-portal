@@ -3,7 +3,7 @@ package mockdb
 import (
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/internal/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/entities"
 )
 
 var timesheets = []entities.Timesheet{
@@ -37,12 +37,10 @@ var timesheets = []entities.Timesheet{
 }
 
 func GetAllTimesheets() (t *[]entities.Timesheet, msg string) {
-
 	return &timesheets, "Successfully fetched timesheets"
 }
 
 func GetTimesheetsByEmployeeId(empId int) (t *[]entities.Timesheet, msg string) {
-
 	ts := make([]entities.Timesheet, 0)
 	for _, t := range timesheets {
 		if t.EmployeeId == empId {
@@ -57,7 +55,6 @@ func GetTimesheetsByEmployeeId(empId int) (t *[]entities.Timesheet, msg string) 
 }
 
 func CreateTimesheet(timesheet entities.Timesheet) (t *entities.Timesheet, msg string) {
-
 	tsSlice, _ := GetTimesheetsByEmployeeId(timesheet.EmployeeId)
 	for _, ts := range *tsSlice {
 		if ts.Id == timesheet.Id {
@@ -72,7 +69,6 @@ func CreateTimesheet(timesheet entities.Timesheet) (t *entities.Timesheet, msg s
 }
 
 func UpdateTimesheet(timesheet entities.Timesheet, id int) (t *entities.Timesheet, msg string) {
-
 	for i, ts := range timesheets {
 		if ts.Id == id {
 			timesheets[i] = timesheet
@@ -83,7 +79,6 @@ func UpdateTimesheet(timesheet entities.Timesheet, id int) (t *entities.Timeshee
 }
 
 func DeleteTimesheet(id int) (t *[]entities.Timesheet, msg string) {
-
 	for i, ts := range timesheets {
 		if ts.Id == id {
 			before := timesheets[:i]
