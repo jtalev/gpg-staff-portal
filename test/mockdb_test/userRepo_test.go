@@ -81,13 +81,11 @@ func TestGetUserByEmployeeId(t *testing.T) {
 		ModifiedAt:   time.Now(),
 	}
 
-	// employee id in db
 	got, _ := mockdb.GetUserByEmployeeId(000000)
 	if !reflect.DeepEqual(got, &robbie) {
 		t.Errorf("GetUserByEmployeeId(000000) = %v; want %v", got, &robbie)
 	}
 
-	// employee id not in db
 	got, err := mockdb.GetUserByEmployeeId(521213)
 	if err == "Successfully fetched user" {
 		t.Errorf("GetUserByEmployeeId(000000) error = %v; want User doesn't exist", err)
