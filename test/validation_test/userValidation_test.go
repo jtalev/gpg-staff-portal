@@ -14,7 +14,7 @@ func TestValidUser(t *testing.T) {
 	}
 
 	user := entities.User{
-		
+
 		Uid:          0,
 		EmployeeId:   1920321,
 		FirstName:    "Robbie",
@@ -23,33 +23,32 @@ func TestValidUser(t *testing.T) {
 		PasswordHash: "blsbdjksd65452!",
 		CreatedAt:    time.Now(),
 		ModifiedAt:   time.Now(),
-		
 	}
-	
+
 	result := validation.ValidateUser(user)
 
 	for _, r := range result {
 		if r.IsSuccessful != test.IsSuccessful {
 			t.Errorf("IsSuccessful flag not as expected. want=%v, got=%v",
-					test.IsSuccessful, r.IsSuccessful)
+				test.IsSuccessful, r.IsSuccessful)
 		}
 		if r.Msg != test.Msg {
 			t.Errorf("Msg not as expected: want=%s, got=%s",
-					test.Msg, r.Msg)
+				test.Msg, r.Msg)
 		}
 	}
 }
 
-type validateIntTest struct{
-	expected	validation.Result
-	value		int
-	field		string
+type validateIntTest struct {
+	expected validation.Result
+	value    int
+	field    string
 }
 
-type validateStringTest struct{
-	expected	validation.Result
-	value		string
-	field		string
+type validateStringTest struct {
+	expected validation.Result
+	value    string
+	field    string
 }
 
 func TestFailedValidation(t *testing.T) {
@@ -64,8 +63,8 @@ func TestFailedValidation(t *testing.T) {
 			"FirstName",
 		},
 		{
-			validation.Result{IsSuccessful: false, Msg: "First name should not contain digits"}, 
-			"sl1ddy", 
+			validation.Result{IsSuccessful: false, Msg: "First name should not contain digits"},
+			"sl1ddy",
 			"FirstName",
 		},
 		{
@@ -74,8 +73,8 @@ func TestFailedValidation(t *testing.T) {
 			"LastName",
 		},
 		{
-			validation.Result{IsSuccessful: false, Msg: "Last name should not contains digits"}, 
-			"sl1ddy", 
+			validation.Result{IsSuccessful: false, Msg: "Last name should not contains digits"},
+			"sl1ddy",
 			"LastName",
 		},
 		{
@@ -141,3 +140,23 @@ func TestFailedValidation(t *testing.T) {
 		}
 	}
 }
+
+type Login struct {
+	email    string
+	password string
+}
+
+func TestValidLogin(t *testing.T) {
+	e := validation.Result{IsSuccessful: true, Msg: ""}
+	l := Login{"bigfella@outlook.com", "password1!"}
+	r := validation.ValidateLogin(l.email, l.password)
+
+	if r["Email"] != e {
+		t.Errorf("Email: want=%v, got=%v", e, r["Email"])
+	}
+	if r["PasswordHash"] != e {
+		t.Errorf("PasswordHash: want=%v, got=%v", e, r["Email"])
+	}
+}
+
+// TODO: test for incorrect login field input

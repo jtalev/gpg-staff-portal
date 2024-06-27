@@ -12,7 +12,7 @@ import (
 func ValidateEmployeeId(id int) Result {
 	result := Result{IsSuccessful: true, Msg: ""}
 	str := strconv.Itoa(id)
-	
+
 	if len(str) != 7 {
 		result = Result{IsSuccessful: false, Msg: "Incorrect ID length"}
 	}
@@ -54,7 +54,7 @@ func ValidateLastName(name string) Result {
 
 func ValidateEmail(email string) Result {
 	result := Result{IsSuccessful: true, Msg: ""}
-	
+
 	r, _ := regexp.Compile("@")
 	if !r.MatchString(email) {
 		result = Result{IsSuccessful: false, Msg: "Not a valid email"}
@@ -90,12 +90,21 @@ func ValidatePassword(password string) Result {
 
 func ValidateUser(user entities.User) map[string]Result {
 	results := map[string]Result{}
-	
+
 	results["EmployeeId"] = ValidateEmployeeId(user.EmployeeId)
 	results["FirstName"] = ValidateFirstName(user.FirstName)
 	results["LastName"] = ValidateLastName(user.LastName)
 	results["Email"] = ValidateEmail(user.Email)
 	results["PasswordHash"] = ValidatePassword(user.PasswordHash)
+
+	return results
+}
+
+func ValidateLogin(email, password string) map[string]Result {
+	results := map[string]Result{}
+
+	results["Email"] = ValidateEmail(email)
+	results["PasswordHash"] = ValidatePassword(password)
 
 	return results
 }
