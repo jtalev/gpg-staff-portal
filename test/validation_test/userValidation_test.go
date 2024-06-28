@@ -4,12 +4,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/pkg/types"
 	"github.com/jtalev/gpg-staff-portal/pkg/validation"
+	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
 func TestValidUser(t *testing.T) {
-	test := validation.Result{
+	test := types.Result{
 		IsValid: true, Error: "",
 	}
 
@@ -29,127 +29,114 @@ func TestValidUser(t *testing.T) {
 
 	for _, r := range result {
 		if r.IsValid != test.IsValid {
-			t.Errorf("IsSuccessful flag not as expected. want=%v, got=%v",
+			t.Errorf("IsValid flag not as Expected. want=%v, got=%v",
 				test.IsValid, r.IsValid)
 		}
 		if r.Error != test.Error {
-			t.Errorf("Msg not as expected: want=%s, got=%s",
+			t.Errorf("Error not as Expected: want=%s, got=%s",
 				test.Error, r.Error)
 		}
 	}
 }
 
-type validateIntTest struct {
-	expected validation.Result
-	value    int
-	field    string
-}
-
-type validateStringTest struct {
-	expected validation.Result
-	value    string
-	field    string
-}
-
 func TestFailedValidation(t *testing.T) {
-	intTests := []validateIntTest{
-		{validation.Result{IsValid: false, Error: "Incorrect ID length"}, 19203213, "EmployeeId"},
+	intTests := []types.ValidateIntTest{
+		{
+			Expected: types.Result{IsValid: false, Error: "Incorrect ID length"},
+			Value: 19203213, 
+			Field: "EmployeeId",
+		},
 	}
 
-	strngTests := []validateStringTest{
+	strngTests := []types.ValidateStringTest{
 		{
-			validation.Result{IsValid: false, Error: "First name to long"},
-			"abcdefghijklmnoqrstuvwxyzabcdefg",
-			"FirstName",
+			Expected: types.Result{IsValid: false, Error: "First name to long"},
+			Value: "abcdefghijklmnoqrstuvwxyzabcdefg",
+			Field: "FirstName",
 		},
 		{
-			validation.Result{IsValid: false, Error: "First name should not contain digits"},
-			"sl1ddy",
-			"FirstName",
+			Expected: types.Result{IsValid: false, Error: "First name should not contain digits"},
+			Value: "sl1ddy",
+			Field: "FirstName",
 		},
 		{
-			validation.Result{IsValid: false, Error: "Last name to long"},
-			"abcdefghijklmnoqrstuvwxyzabcdefg",
-			"LastName",
+			Expected: types.Result{IsValid: false, Error: "Last name to long"},
+			Value: "abcdefghijklmnoqrstuvwxyzabcdefg",
+			Field: "LastName",
 		},
 		{
-			validation.Result{IsValid: false, Error: "Last name should not contains digits"},
-			"sl1ddy",
-			"LastName",
+			Expected: types.Result{IsValid: false, Error: "Last name should not contains digits"},
+			Value: "sl1ddy",
+			Field: "LastName",
 		},
 		{
-			validation.Result{IsValid: false, Error: "Not a valid email"},
-			"bigfellaoutlook.com",
-			"Email",
+			Expected: types.Result{IsValid: false, Error: "Not a valid email"},
+			Value: "bigfellaoutlook.com",
+			Field: "Email",
 		},
 		{
-			validation.Result{IsValid: false, Error: "Not a valid email"},
-			"bigfella@outlook",
-			"Email",
+			Expected: types.Result{IsValid: false, Error: "Not a valid email"},
+			Value: "bigfella@outlook",
+			Field: "Email",
 		},
 		{
-			validation.Result{IsValid: false, Error: "Password must contain 8 or more characters"},
-			"1!",
-			"PasswordHash",
+			Expected: types.Result{IsValid: false, Error: "Password must contain 8 or more characters"},
+			Value: "1!",
+			Field: "PasswordHash",
 		},
 		{
-			validation.Result{IsValid: false, Error: "Password must contain symbol"},
-			"password1",
-			"PasswordHash",
+			Expected: types.Result{IsValid: false, Error: "Password must contain symbol"},
+			Value: "password1",
+			Field: "PasswordHash",
 		},
 		{
-			validation.Result{IsValid: false, Error: "Password must contain 1 or more digit(s)"},
-			"password!",
-			"PasswordHash",
+			Expected: types.Result{IsValid: false, Error: "Password must contain 1 or more digit(s)"},
+			Value: "password!",
+			Field: "PasswordHash",
 		},
 	}
 
 	for _, tt := range intTests {
-		if tt.field == "EmployeeId" {
-			r := validation.ValidateEmployeeId(tt.value)
-			if r != tt.expected {
-				t.Errorf("EmployeeId: want=%v, got=%v", tt.expected, r)
+		if tt.Field == "EmployeeId" {
+			r := validation.ValidateEmployeeId(tt.Value)
+			if r != tt.Expected {
+				t.Errorf("EmployeeId: want=%v, got=%v", tt.Expected, r)
 			}
 		}
 	}
 
 	for _, tt := range strngTests {
-		if tt.field == "FirstName" {
-			r := validation.ValidateFirstName(tt.value)
-			if r != tt.expected {
-				t.Errorf("FirstName: want=%v, got=%v", tt.expected, r)
+		if tt.Field == "FirstName" {
+			r := validation.ValidateFirstName(tt.Value)
+			if r != tt.Expected {
+				t.Errorf("FirstName: want=%v, got=%v", tt.Expected, r)
 			}
 		}
-		if tt.field == "LastName" {
-			r := validation.ValidateLastName(tt.value)
-			if r != tt.expected {
-				t.Errorf("LastName: want=%v, got=%v", tt.expected, r)
+		if tt.Field == "LastName" {
+			r := validation.ValidateLastName(tt.Value)
+			if r != tt.Expected {
+				t.Errorf("LastName: want=%v, got=%v", tt.Expected, r)
 			}
 		}
-		if tt.field == "Email" {
-			r := validation.ValidateEmail(tt.value)
-			if r != tt.expected {
-				t.Errorf("Email: want=%v, got=%v", tt.expected, r)
+		if tt.Field == "Email" {
+			r := validation.ValidateEmail(tt.Value)
+			if r != tt.Expected {
+				t.Errorf("Email: want=%v, got=%v", tt.Expected, r)
 			}
 		}
-		if tt.field == "PasswordHash" {
-			r := validation.ValidatePassword(tt.value)
-			if r != tt.expected {
-				t.Errorf("Password: want=%v, got=%v", tt.expected, r)
+		if tt.Field == "PasswordHash" {
+			r := validation.ValidatePassword(tt.Value)
+			if r != tt.Expected {
+				t.Errorf("Password: want=%v, got=%v", tt.Expected, r)
 			}
 		}
 	}
 }
 
-type Login struct {
-	email    string
-	password string
-}
-
 func TestValidLogin(t *testing.T) {
-	e := validation.Result{IsValid: true, Error: ""}
-	l := Login{"bigfella@outlook.com", "password1!"}
-	r := validation.ValidateLogin(l.email, l.password)
+	e := types.Result{IsValid: true, Error: ""}
+	l := types.Login{Email: "bigfella@outlook.com", Password: "password1!"}
+	r := validation.ValidateLogin(l.Email, l.Password)
 
 	if r["Email"] != e {
 		t.Errorf("Email: want=%v, got=%v", e, r["Email"])
@@ -158,5 +145,3 @@ func TestValidLogin(t *testing.T) {
 		t.Errorf("PasswordHash: want=%v, got=%v", e, r["Email"])
 	}
 }
-
-// TODO: test for incorrect login field input

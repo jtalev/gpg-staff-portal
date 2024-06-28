@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/pkg/types"
 	"github.com/jtalev/gpg-staff-portal/pkg/mockdb"
+	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
 func TestGetUserData(t *testing.T) {

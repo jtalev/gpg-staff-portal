@@ -15,6 +15,11 @@ type User struct {
 	ModifiedAt   time.Time
 }
 
+type Login struct {
+	Email    string
+	Password string
+}
+
 type Timesheet struct {
 	Id         int
 	EmployeeId int
@@ -41,4 +46,21 @@ type LeaveRequest struct {
 	IsApproved bool
 	CreatedAt  time.Time
 	ModifiedAt time.Time
+}
+
+type ValidateIntTest struct {
+	Expected Result
+	Value    int
+	Field    string
+}
+
+type ValidateStringTest struct {
+	Expected Result
+	Value    string
+	Field    string
+}
+
+type Result struct {
+	IsValid bool
+	Error   string
 }
