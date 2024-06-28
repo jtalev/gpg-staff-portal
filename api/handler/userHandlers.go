@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/jtalev/gpg-staff-portal/pkg/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/types"
 	"github.com/jtalev/gpg-staff-portal/pkg/mockdb"
 )
 
@@ -68,7 +68,7 @@ func(u UserHandler) GetUserByEmployeeIdHandler(w http.ResponseWriter, r *http.Re
 }
 
 func(u UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
-	var user entities.User
+	var user types.User
 
 	if r.Header.Get("Content-Type") != "application/json" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -103,7 +103,7 @@ func(u UserHandler) UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid id value", http.StatusBadRequest)
 	}
 
-	var user entities.User
+	var user types.User
 
 	if r.Header.Get("Content-Type") != "application/json" {
 		w.WriteHeader(http.StatusBadRequest)

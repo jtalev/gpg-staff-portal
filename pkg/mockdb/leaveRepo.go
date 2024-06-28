@@ -3,10 +3,10 @@ package mockdb
 import (
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/pkg/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
-var leaveRequests = []entities.LeaveRequest{
+var leaveRequests = []types.LeaveRequest{
 	{
 		Id:         0,
 		EmployeeId: 000000,
@@ -31,12 +31,12 @@ var leaveRequests = []entities.LeaveRequest{
 	},
 }
 
-func GetAllLeaveRequests() (l *[]entities.LeaveRequest, msg string) {
+func GetAllLeaveRequests() (l *[]types.LeaveRequest, msg string) {
 	return &leaveRequests, "Successfully fetched leave requests"
 }
 
-func GetLeaveRequestsByEmployeeId(empId int) (l *[]entities.LeaveRequest, msg string) {
-	list := make([]entities.LeaveRequest, 0)
+func GetLeaveRequestsByEmployeeId(empId int) (l *[]types.LeaveRequest, msg string) {
+	list := make([]types.LeaveRequest, 0)
 	for _, lr := range leaveRequests {
 		if lr.EmployeeId == empId {
 			list = append(list, lr)
@@ -49,7 +49,7 @@ func GetLeaveRequestsByEmployeeId(empId int) (l *[]entities.LeaveRequest, msg st
 	return &list, "Successfully fetched leave requests"
 }
 
-func CreateLeaveRequest(lr entities.LeaveRequest) (l *entities.LeaveRequest, msg string) {
+func CreateLeaveRequest(lr types.LeaveRequest) (l *types.LeaveRequest, msg string) {
 	for _, r := range leaveRequests {
 		if r.Id == lr.Id {
 			return nil, "This leave request already exists"
@@ -60,7 +60,7 @@ func CreateLeaveRequest(lr entities.LeaveRequest) (l *entities.LeaveRequest, msg
 	return &lr, "Successfully created leave request"
 }
 
-func UpdateLeaveRequest(lr entities.LeaveRequest, id int) (l *entities.LeaveRequest, msg string) {
+func UpdateLeaveRequest(lr types.LeaveRequest, id int) (l *types.LeaveRequest, msg string) {
 	for i, r := range leaveRequests {
 		if r.Id == id {
 			leaveRequests[i] = lr
@@ -71,7 +71,7 @@ func UpdateLeaveRequest(lr entities.LeaveRequest, id int) (l *entities.LeaveRequ
 	return nil, "No leave request with given id"
 }
 
-func DeleteLeaveRequest(id int) (l *[]entities.LeaveRequest, msg string) {
+func DeleteLeaveRequest(id int) (l *[]types.LeaveRequest, msg string) {
 	for i, r := range leaveRequests {
 		if r.Id == id {
 			before := leaveRequests[:i]

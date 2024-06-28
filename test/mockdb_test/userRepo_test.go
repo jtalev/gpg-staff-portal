@@ -5,12 +5,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/pkg/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/types"
 	"github.com/jtalev/gpg-staff-portal/pkg/mockdb"
 )
 
 func TestGetUserData(t *testing.T) {
-	robbie := entities.User{
+	robbie := types.User{
 		Uid:          0,
 		EmployeeId:   000000,
 		FirstName:    "Robbie",
@@ -20,7 +20,7 @@ func TestGetUserData(t *testing.T) {
 		CreatedAt:    time.Now(),
 		ModifiedAt:   time.Now(),
 	}
-	ronnie := entities.User{
+	ronnie := types.User{
 		Uid:          1,
 		EmployeeId:   000001,
 		FirstName:    "Ronnie",
@@ -30,7 +30,7 @@ func TestGetUserData(t *testing.T) {
 		CreatedAt:    time.Now(),
 		ModifiedAt:   time.Now(),
 	}
-	data := []entities.User{
+	data := []types.User{
 		robbie,
 		ronnie,
 	}
@@ -42,7 +42,7 @@ func TestGetUserData(t *testing.T) {
 }
 
 func TestGetUserById(t *testing.T) {
-	robbie := entities.User{
+	robbie := types.User{
 		Uid:          0,
 		EmployeeId:   000000,
 		FirstName:    "Robbie",
@@ -70,7 +70,7 @@ func TestGetUserById(t *testing.T) {
 }
 
 func TestGetUserByEmployeeId(t *testing.T) {
-	robbie := entities.User{
+	robbie := types.User{
 		Uid:          0,
 		EmployeeId:   000000,
 		FirstName:    "Robbie",

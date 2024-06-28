@@ -3,10 +3,10 @@ package mockdb
 import (
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/pkg/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
-var users = []entities.User{
+var users = []types.User{
 	{
 		Uid:          0,
 		EmployeeId:   000000,
@@ -29,11 +29,11 @@ var users = []entities.User{
 	},
 }
 
-func GetUserData() ([]entities.User, error) {
+func GetUserData() ([]types.User, error) {
 	return users, nil
 }
 
-func GetUserById(id int) (*entities.User, string) {
+func GetUserById(id int) (*types.User, string) {
 	for _, user := range users {
 		if user.Uid == id {
 			return &user, "Successfully fetched user"
@@ -43,7 +43,7 @@ func GetUserById(id int) (*entities.User, string) {
 	return nil, "User doesn't exist"
 }
 
-func GetUserByEmployeeId(employeeId int) (*entities.User, string) {
+func GetUserByEmployeeId(employeeId int) (*types.User, string) {
 	for _, user := range users {
 		if user.EmployeeId == employeeId {
 			return &user, "Successfully fetched user"
@@ -53,7 +53,7 @@ func GetUserByEmployeeId(employeeId int) (*entities.User, string) {
 	return nil, "User doesn't exist"
 }
 
-func CreateUser(user entities.User) (*[]entities.User, string) {
+func CreateUser(user types.User) (*[]types.User, string) {
 	for _, item := range users {
 		if user.EmployeeId == item.EmployeeId {
 			return nil, "Employee ID already exists"
@@ -67,7 +67,7 @@ func CreateUser(user entities.User) (*[]entities.User, string) {
 	return &users, "Successfully created user"
 }
 
-func UpdateUser(user entities.User, id int) (*entities.User, string) {
+func UpdateUser(user types.User, id int) (*types.User, string) {
 	for i, item := range users {
 		if id == item.Uid {
 			users[i] = user
@@ -77,7 +77,7 @@ func UpdateUser(user entities.User, id int) (*entities.User, string) {
 	return nil, "User doesn't exist"
 }
 
-func DeleteUser(id int) (*[]entities.User, string) {
+func DeleteUser(id int) (*[]types.User, string) {
 	for i, user := range users {
 		if user.Uid == id {
 			before := users[:i]

@@ -3,10 +3,10 @@ package mockdb
 import (
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/pkg/entities"
+	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
-var timesheets = []entities.Timesheet{
+var timesheets = []types.Timesheet{
 	{
 		Id:         0,
 		EmployeeId: 000000,
@@ -36,12 +36,12 @@ var timesheets = []entities.Timesheet{
 	},
 }
 
-func GetAllTimesheets() (t *[]entities.Timesheet, msg string) {
+func GetAllTimesheets() (t *[]types.Timesheet, msg string) {
 	return &timesheets, "Successfully fetched timesheets"
 }
 
-func GetTimesheetsByEmployeeId(empId int) (t *[]entities.Timesheet, msg string) {
-	ts := make([]entities.Timesheet, 0)
+func GetTimesheetsByEmployeeId(empId int) (t *[]types.Timesheet, msg string) {
+	ts := make([]types.Timesheet, 0)
 	for _, t := range timesheets {
 		if t.EmployeeId == empId {
 			ts = append(ts, t)
@@ -54,7 +54,7 @@ func GetTimesheetsByEmployeeId(empId int) (t *[]entities.Timesheet, msg string) 
 	return &ts, "Successfully fetched users timesheets"
 }
 
-func CreateTimesheet(timesheet entities.Timesheet) (t *entities.Timesheet, msg string) {
+func CreateTimesheet(timesheet types.Timesheet) (t *types.Timesheet, msg string) {
 	tsSlice, _ := GetTimesheetsByEmployeeId(timesheet.EmployeeId)
 	for _, ts := range *tsSlice {
 		if ts.Id == timesheet.Id {
@@ -68,7 +68,7 @@ func CreateTimesheet(timesheet entities.Timesheet) (t *entities.Timesheet, msg s
 	return &timesheet, "Timesheet successfully created"
 }
 
-func UpdateTimesheet(timesheet entities.Timesheet, id int) (t *entities.Timesheet, msg string) {
+func UpdateTimesheet(timesheet types.Timesheet, id int) (t *types.Timesheet, msg string) {
 	for i, ts := range timesheets {
 		if ts.Id == id {
 			timesheets[i] = timesheet
@@ -78,7 +78,7 @@ func UpdateTimesheet(timesheet entities.Timesheet, id int) (t *entities.Timeshee
 	return nil, "No timesheet with given id"
 }
 
-func DeleteTimesheet(id int) (t *[]entities.Timesheet, msg string) {
+func DeleteTimesheet(id int) (t *[]types.Timesheet, msg string) {
 	for i, ts := range timesheets {
 		if ts.Id == id {
 			before := timesheets[:i]
