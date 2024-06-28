@@ -39,7 +39,7 @@ func TestValidUser(t *testing.T) {
 	}
 }
 
-func TestFailedValidation(t *testing.T) {
+func TestInvalidUserField(t *testing.T) {
 	intTests := []types.ValidateIntTest{
 		{
 			Expected: types.Result{IsValid: false, Error: "Incorrect ID length"},

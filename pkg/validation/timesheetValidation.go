@@ -29,7 +29,7 @@ func ValidateEndTime(start, end, date time.Time) types.Result {
 		result = types.Result{IsValid: false, Error: "End time must be set"}
 	}
 	if !end.After(start) {
-		result = types.Result{IsValid: false, Error: "End time must be before end time"}
+		result = types.Result{IsValid: false, Error: "End time must be after start time"}
 	}
 	if end.Year() != date.Year() || end.YearDay() != date.YearDay() {
 		result = types.Result{IsValid: false, Error: "End time must have same date as timesheet"}

@@ -60,6 +60,14 @@ type ValidateStringTest struct {
 	Field    string
 }
 
+type ValidateTimeTest struct {
+	Expected Result
+	Start    time.Time
+	End    time.Time
+	Date    time.Time
+	Field    string
+}
+
 type Result struct {
 	IsValid bool
 	Error   string

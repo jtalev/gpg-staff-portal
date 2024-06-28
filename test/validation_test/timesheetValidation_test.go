@@ -36,5 +36,105 @@ func TestValidTimesheet(t *testing.T) {
 }
 
 func TestInvalidTimesheetField(t *testing.T) {
+	intTests := []types.ValidateIntTest{
+		{
+			Expected: types.Result{IsValid: false, Error: "Incorrect ID length"},
+			Value: 19283743,
+			Field: "EmployeeId",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "Incorrect ID length"},
+			Value: 192837,
+			Field: "EmployeeId",
+		},
+	}
 
+	timeTests := []types.ValidateTimeTest{
+		{
+			Expected: types.Result{IsValid: false, Error: "Start time must be set"},
+			Start: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			End: time.Date(1, time.January, 1, 1, 0, 0, 0, time.UTC),
+			Date: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Field: "StartTime",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "Start time must be before end time"},
+			Start: time.Date(1, time.January, 1, 1, 0, 0, 0, time.UTC),
+			End: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Date: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Field: "StartTime",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "Start time must have same date as timesheet"},
+			Start: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			End: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Date: time.Now(),
+			Field: "StartTime",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "End time must be set"},
+			Start: time.Date(1, time.January, 1, -1, 0, 0, 0, time.UTC),
+			End: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Date: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Field: "EndTime",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "End time must be after start time"},
+			Start: time.Date(1, time.January, 1, 1, 0, 0, 0, time.UTC),
+			End: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Date: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Field: "EndTime",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "End time must have same date as timesheet"},
+			Start: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			End: time.Date(1, time.January, 1, 1, 0, 0, 0, time.UTC),
+			Date: time.Now(),
+			Field: "EndTime",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "Date must be set"},
+			Start: time.Now(),
+			End: time.Now(),
+			Date: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+			Field: "Date",
+		},
+		{
+			Expected: types.Result{IsValid: false, Error: "Date must not be a future date"},
+			Start: time.Now(),
+			End: time.Now(),
+			Date: time.Now().AddDate(0, 0, 1),
+			Field: "Date",
+		},
+	}
+
+	for _, tt := range intTests {
+		if tt.Field == "EmployeeId" {
+			r := validation.ValidateEmployeeId(tt.Value)
+			if r != tt.Expected {
+				t.Errorf("EmployeeId: want=%v, got=%v", tt.Expected, r)
+			}
+		}
+	}
+
+	for _, tt := range timeTests {
+		if tt.Field == "StartTime" {
+			r := validation.ValidateStartTime(tt.Start, tt.End, tt.Date)
+			if r != tt.Expected {
+				t.Errorf("StartTime: want=%v, got=%v", tt.Expected, r)
+			}
+		}
+		if tt.Field == "EndTime" {
+			r := validation.ValidateEndTime(tt.Start, tt.End, tt.Date)
+			if r != tt.Expected {
+				t.Errorf("EndTime: want=%v, got=%v", tt.Expected, r)
+			}
+		}
+		if tt.Field == "Date" {
+			r := validation.ValidateDate(tt.Date)
+			if r != tt.Expected {
+				t.Errorf("Date: want=%v, got=%v", tt.Expected, r)
+			}
+		}
+	}
 }
