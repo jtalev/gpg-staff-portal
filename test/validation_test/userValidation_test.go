@@ -4,12 +4,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jtalev/gpg-staff-portal/pkg/validation"
 	"github.com/jtalev/gpg-staff-portal/pkg/types"
+	"github.com/jtalev/gpg-staff-portal/pkg/validation"
 )
 
 func TestValidUser(t *testing.T) {
-	test := types.Result{
+	test := types.ValidationResult{
 		IsValid: true, Error: "",
 	}
 
@@ -42,57 +42,57 @@ func TestValidUser(t *testing.T) {
 func TestInvalidUserField(t *testing.T) {
 	intTests := []types.ValidateIntTest{
 		{
-			Expected: types.Result{IsValid: false, Error: "Incorrect ID length"},
-			Value: 19203213, 
-			Field: "EmployeeId",
+			Expected: types.ValidationResult{IsValid: false, Error: "Incorrect ID length"},
+			Value:    19203213,
+			Field:    "EmployeeId",
 		},
 	}
 
 	strngTests := []types.ValidateStringTest{
 		{
-			Expected: types.Result{IsValid: false, Error: "First name to long"},
-			Value: "abcdefghijklmnoqrstuvwxyzabcdefg",
-			Field: "FirstName",
+			Expected: types.ValidationResult{IsValid: false, Error: "First name to long"},
+			Value:    "abcdefghijklmnoqrstuvwxyzabcdefg",
+			Field:    "FirstName",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "First name should not contain digits"},
-			Value: "sl1ddy",
-			Field: "FirstName",
+			Expected: types.ValidationResult{IsValid: false, Error: "First name should not contain digits"},
+			Value:    "sl1ddy",
+			Field:    "FirstName",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "Last name to long"},
-			Value: "abcdefghijklmnoqrstuvwxyzabcdefg",
-			Field: "LastName",
+			Expected: types.ValidationResult{IsValid: false, Error: "Last name to long"},
+			Value:    "abcdefghijklmnoqrstuvwxyzabcdefg",
+			Field:    "LastName",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "Last name should not contains digits"},
-			Value: "sl1ddy",
-			Field: "LastName",
+			Expected: types.ValidationResult{IsValid: false, Error: "Last name should not contains digits"},
+			Value:    "sl1ddy",
+			Field:    "LastName",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "Not a valid email"},
-			Value: "bigfellaoutlook.com",
-			Field: "Email",
+			Expected: types.ValidationResult{IsValid: false, Error: "Not a valid email"},
+			Value:    "bigfellaoutlook.com",
+			Field:    "Email",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "Not a valid email"},
-			Value: "bigfella@outlook",
-			Field: "Email",
+			Expected: types.ValidationResult{IsValid: false, Error: "Not a valid email"},
+			Value:    "bigfella@outlook",
+			Field:    "Email",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "Password must contain 8 or more characters"},
-			Value: "1!",
-			Field: "PasswordHash",
+			Expected: types.ValidationResult{IsValid: false, Error: "Password must contain 8 or more characters"},
+			Value:    "1!",
+			Field:    "PasswordHash",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "Password must contain symbol"},
-			Value: "password1",
-			Field: "PasswordHash",
+			Expected: types.ValidationResult{IsValid: false, Error: "Password must contain symbol"},
+			Value:    "password1",
+			Field:    "PasswordHash",
 		},
 		{
-			Expected: types.Result{IsValid: false, Error: "Password must contain 1 or more digit(s)"},
-			Value: "password!",
-			Field: "PasswordHash",
+			Expected: types.ValidationResult{IsValid: false, Error: "Password must contain 1 or more digit(s)"},
+			Value:    "password!",
+			Field:    "PasswordHash",
 		},
 	}
 
@@ -134,7 +134,7 @@ func TestInvalidUserField(t *testing.T) {
 }
 
 func TestValidLogin(t *testing.T) {
-	e := types.Result{IsValid: true, Error: ""}
+	e := types.ValidationResult{IsValid: true, Error: ""}
 	l := types.Login{Email: "bigfella@outlook.com", Password: "password1!"}
 	r := validation.ValidateLogin(l.Email, l.Password)
 

@@ -49,26 +49,32 @@ type LeaveRequest struct {
 }
 
 type ValidateIntTest struct {
-	Expected Result
+	Expected ValidationResult
 	Value    int
 	Field    string
 }
 
 type ValidateStringTest struct {
-	Expected Result
+	Expected ValidationResult
 	Value    string
 	Field    string
 }
 
 type ValidateTimeTest struct {
-	Expected Result
+	Expected ValidationResult
 	Start    time.Time
 	End    time.Time
 	Date    time.Time
 	Field    string
 }
 
-type Result struct {
+type ValidateBoolTest struct {
+	Expected ValidationResult
+	Value 	 bool
+	Field	 string
+}
+
+type ValidationResult struct {
 	IsValid bool
 	Error   string
 }
