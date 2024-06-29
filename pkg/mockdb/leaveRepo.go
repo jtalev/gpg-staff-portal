@@ -6,6 +6,8 @@ import (
 	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
+type LeaveRepo struct {}
+
 var leaveRequests = []types.LeaveRequest{
 	{
 		Id:         0,
@@ -31,11 +33,11 @@ var leaveRequests = []types.LeaveRequest{
 	},
 }
 
-func GetAllLeaveRequests() (l *[]types.LeaveRequest, msg string) {
+func (l *LeaveRepo) GetAllLeaveRequests() (lr *[]types.LeaveRequest, msg string) {
 	return &leaveRequests, "Successfully fetched leave requests"
 }
 
-func GetLeaveRequestsByEmployeeId(empId int) (l *[]types.LeaveRequest, msg string) {
+func (l *LeaveRepo) GetLeaveRequestsByEmployeeId(empId int) (lr *[]types.LeaveRequest, msg string) {
 	list := make([]types.LeaveRequest, 0)
 	for _, lr := range leaveRequests {
 		if lr.EmployeeId == empId {
@@ -49,29 +51,29 @@ func GetLeaveRequestsByEmployeeId(empId int) (l *[]types.LeaveRequest, msg strin
 	return &list, "Successfully fetched leave requests"
 }
 
-func CreateLeaveRequest(lr types.LeaveRequest) (l *types.LeaveRequest, msg string) {
+func (l *LeaveRepo) CreateLeaveRequest(leaveRequest types.LeaveRequest) (lr *types.LeaveRequest, msg string) {
 	for _, r := range leaveRequests {
-		if r.Id == lr.Id {
+		if r.Id == leaveRequest.Id {
 			return nil, "This leave request already exists"
 		}
 	}
 
-	leaveRequests = append(leaveRequests, lr)
-	return &lr, "Successfully created leave request"
+	leaveRequests = append(leaveRequests, leaveRequest)
+	return &leaveRequest, "Successfully created leave request"
 }
 
-func UpdateLeaveRequest(lr types.LeaveRequest, id int) (l *types.LeaveRequest, msg string) {
+func (l *LeaveRepo) UpdateLeaveRequest(leaveRequest types.LeaveRequest, id int) (lr *types.LeaveRequest, msg string) {
 	for i, r := range leaveRequests {
 		if r.Id == id {
-			leaveRequests[i] = lr
-			return &lr, "successfully updated leave request"
+			leaveRequests[i] = leaveRequest
+			return &leaveRequest, "successfully updated leave request"
 		}
 	}
 
 	return nil, "No leave request with given id"
 }
 
-func DeleteLeaveRequest(id int) (l *[]types.LeaveRequest, msg string) {
+func (l *LeaveRepo) DeleteLeaveRequest(id int) (lr *[]types.LeaveRequest, msg string) {
 	for i, r := range leaveRequests {
 		if r.Id == id {
 			before := leaveRequests[:i]

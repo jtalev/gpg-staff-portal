@@ -6,6 +6,8 @@ import (
 	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
+type TimesheetRepo struct {}
+
 var timesheets = []types.Timesheet{
 	{
 		Id:         0,
@@ -36,26 +38,26 @@ var timesheets = []types.Timesheet{
 	},
 }
 
-func GetAllTimesheets() (t *[]types.Timesheet, msg string) {
+func (t *TimesheetRepo) GetAllTimesheets() (ts *[]types.Timesheet, msg string) {
 	return &timesheets, "Successfully fetched timesheets"
 }
 
-func GetTimesheetsByEmployeeId(empId int) (t *[]types.Timesheet, msg string) {
-	ts := make([]types.Timesheet, 0)
+func (t *TimesheetRepo) GetTimesheetsByEmployeeId(empId int) (ts *[]types.Timesheet, msg string) {
+	timesheets := make([]types.Timesheet, 0)
 	for _, t := range timesheets {
 		if t.EmployeeId == empId {
-			ts = append(ts, t)
+			timesheets = append(timesheets, t)
 		}
 	}
 
-	if len(ts) == 0 {
+	if len(timesheets) == 0 {
 		return nil, "User not assigned to any timesheets"
 	}
-	return &ts, "Successfully fetched users timesheets"
+	return &timesheets, "Successfully fetched users timesheets"
 }
 
-func CreateTimesheet(timesheet types.Timesheet) (t *types.Timesheet, msg string) {
-	tsSlice, _ := GetTimesheetsByEmployeeId(timesheet.EmployeeId)
+func (t *TimesheetRepo) CreateTimesheet(timesheet types.Timesheet) (ts *types.Timesheet, msg string) {
+	tsSlice, _ := t.GetTimesheetsByEmployeeId(timesheet.EmployeeId)
 	for _, ts := range *tsSlice {
 		if ts.Id == timesheet.Id {
 			return nil, "Timesheet already exists"
@@ -68,7 +70,7 @@ func CreateTimesheet(timesheet types.Timesheet) (t *types.Timesheet, msg string)
 	return &timesheet, "Timesheet successfully created"
 }
 
-func UpdateTimesheet(timesheet types.Timesheet, id int) (t *types.Timesheet, msg string) {
+func (t *TimesheetRepo) UpdateTimesheet(timesheet types.Timesheet, id int) (ts *types.Timesheet, msg string) {
 	for i, ts := range timesheets {
 		if ts.Id == id {
 			timesheets[i] = timesheet
@@ -78,7 +80,7 @@ func UpdateTimesheet(timesheet types.Timesheet, id int) (t *types.Timesheet, msg
 	return nil, "No timesheet with given id"
 }
 
-func DeleteTimesheet(id int) (t *[]types.Timesheet, msg string) {
+func (t *TimesheetRepo) DeleteTimesheet(id int) (ts *[]types.Timesheet, msg string) {
 	for i, ts := range timesheets {
 		if ts.Id == id {
 			before := timesheets[:i]

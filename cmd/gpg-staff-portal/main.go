@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/jtalev/gpg-staff-portal/api"
+	"github.com/jtalev/gpg-staff-portal/pkg/mockdb"
 )
 
 func getEnvVariable(key string) string {
@@ -19,12 +20,13 @@ func getEnvVariable(key string) string {
 }
 
 func main() {
+	db := mockdb.Connect()
 
 	var PORT = getEnvVariable("PORT")
 	r := mux.NewRouter()
 
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("../../web/static"))))
-	api.SetupRoutes(r)
+	api.SetupRoutes(r, db)
 
 	log.Println("Starting server on port:", PORT)
 	if err := http.ListenAndServe(":" + PORT, r); err != nil {

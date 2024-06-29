@@ -3,10 +3,11 @@ package api
 import (
 	"github.com/gorilla/mux"
 	"github.com/jtalev/gpg-staff-portal/api/handler"
+	"github.com/jtalev/gpg-staff-portal/pkg/mockdb"
 )
 
-func SetupRoutes(r *mux.Router) {
-	u := handler.UserHandler{}
+func SetupRoutes(r *mux.Router, db mockdb.Db) {
+	u := handler.UserHandler{Db: db}
 
 	// web
 	r.HandleFunc("/", handler.LoginHandler)

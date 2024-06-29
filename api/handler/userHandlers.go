@@ -14,10 +14,12 @@ import (
 	"github.com/jtalev/gpg-staff-portal/pkg/mockdb"
 )
 
-type UserHandler struct {}
+type UserHandler struct {
+	Db		mockdb.Db
+}
 
 func(u UserHandler) GetUsersHandler(w http.ResponseWriter, r *http.Request) {
-	users, _ := mockdb.GetUserData()
+	users, _ := u.Db.UserRepo.GetUserData()
 
 	path := filepath.Join("..", "..", "web", "tmpl", "userList.html")
 	tmpl, err := template.ParseFiles(path)
@@ -43,7 +45,7 @@ func(u UserHandler) GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, msg := mockdb.GetUserById(id)
+	user, msg := u.Db.UserRepo.GetUserById(id)
 	encoder := json.NewEncoder(w)
 	encoder.Encode(user)
 	encoder.Encode(msg)
@@ -61,7 +63,7 @@ func(u UserHandler) GetUserByEmployeeIdHandler(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	user, msg := mockdb.GetUserByEmployeeId(id)
+	user, msg := u.Db.UserRepo.GetUserByEmployeeId(id)
 	encoder := json.NewEncoder(w)
 	encoder.Encode(user)
 	encoder.Encode(msg)
@@ -88,7 +90,7 @@ func(u UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println(user)
 
-	response, msg := mockdb.CreateUser(user)
+	response, msg := u.Db.UserRepo.CreateUser(user)
 
 	json.NewEncoder(w).Encode(response)
 	json.NewEncoder(w).Encode(msg)
@@ -118,7 +120,7 @@ func(u UserHandler) UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, msg := mockdb.UpdateUser(user, id)
+	response, msg := u.Db.UserRepo.UpdateUser(user, id)
 	json.NewEncoder(w).Encode(response)
 	json.NewEncoder(w).Encode(msg)
 }
@@ -133,7 +135,7 @@ func(u UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userList, msg := mockdb.DeleteUser(id)
+	userList, msg := u.Db.UserRepo.DeleteUser(id)
 	json.NewEncoder(w).Encode(userList)
 	json.NewEncoder(w).Encode(msg)
 }

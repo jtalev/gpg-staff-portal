@@ -9,6 +9,8 @@ import (
 	"github.com/jtalev/gpg-staff-portal/pkg/types"
 )
 
+var u = mockdb.UserRepo{}
+
 func TestGetUserData(t *testing.T) {
 	robbie := types.User{
 		Uid:          0,
@@ -35,7 +37,7 @@ func TestGetUserData(t *testing.T) {
 		ronnie,
 	}
 
-	got, _ := mockdb.GetUserData()
+	got, _ := u.GetUserData()
 	if !reflect.DeepEqual(got, data) {
 		t.Errorf("GetUserData() = %v; want %v", got, data)
 	}
@@ -54,13 +56,13 @@ func TestGetUserById(t *testing.T) {
 	}
 
 	// user id in db
-	got, _ := mockdb.GetUserById(0)
+	got, _ := u.GetUserById(0)
 	if !reflect.DeepEqual(got, &robbie) {
 		t.Errorf("GetUserById(0) = %v; want %v", got, &robbie)
 	}
 
 	// user id not in db
-	got, err := mockdb.GetUserById(999)
+	got, err := u.GetUserById(999)
 	if err == "Successfully fetched user" {
 		t.Errorf("GetUserById(999) error = %v; want User doesn't exist", err)
 	}
@@ -81,12 +83,12 @@ func TestGetUserByEmployeeId(t *testing.T) {
 		ModifiedAt:   time.Now(),
 	}
 
-	got, _ := mockdb.GetUserByEmployeeId(000000)
+	got, _ := u.GetUserByEmployeeId(000000)
 	if !reflect.DeepEqual(got, &robbie) {
 		t.Errorf("GetUserByEmployeeId(000000) = %v; want %v", got, &robbie)
 	}
 
-	got, err := mockdb.GetUserByEmployeeId(521213)
+	got, err := u.GetUserByEmployeeId(521213)
 	if err == "Successfully fetched user" {
 		t.Errorf("GetUserByEmployeeId(000000) error = %v; want User doesn't exist", err)
 	}
