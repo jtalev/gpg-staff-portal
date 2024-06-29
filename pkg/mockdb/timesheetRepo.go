@@ -1,6 +1,7 @@
 package mockdb
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/jtalev/gpg-staff-portal/pkg/types"
@@ -11,7 +12,7 @@ type TimesheetRepo struct {}
 var timesheets = []types.Timesheet{
 	{
 		Id:         0,
-		EmployeeId: 000000,
+		EmployeeId: 1234567,
 		StartTime:  time.Now(),
 		EndTime:    time.Now(),
 		Date:       time.Date(2024, time.June, 17, 8, 0, 0, 0, time.Now().Location()),
@@ -20,7 +21,7 @@ var timesheets = []types.Timesheet{
 	},
 	{
 		Id:         1,
-		EmployeeId: 000000,
+		EmployeeId: 1234567,
 		StartTime:  time.Now(),
 		EndTime:    time.Now(),
 		Date:       time.Date(2024, time.June, 17, 8, 0, 0, 0, time.Now().Location()),
@@ -29,7 +30,7 @@ var timesheets = []types.Timesheet{
 	},
 	{
 		Id:         2,
-		EmployeeId: 000001,
+		EmployeeId: 1234568,
 		StartTime:  time.Now(),
 		EndTime:    time.Now(),
 		Date:       time.Date(2024, time.June, 17, 8, 0, 0, 0, time.Now().Location()),
@@ -43,17 +44,17 @@ func (t *TimesheetRepo) GetAllTimesheets() (ts *[]types.Timesheet, msg string) {
 }
 
 func (t *TimesheetRepo) GetTimesheetsByEmployeeId(empId int) (ts *[]types.Timesheet, msg string) {
-	timesheets := make([]types.Timesheet, 0)
+	tsList := make([]types.Timesheet, 0)
 	for _, t := range timesheets {
 		if t.EmployeeId == empId {
-			timesheets = append(timesheets, t)
+			tsList = append(tsList, t)
 		}
 	}
 
-	if len(timesheets) == 0 {
+	if len(tsList) == 0 {
 		return nil, "User not assigned to any timesheets"
 	}
-	return &timesheets, "Successfully fetched users timesheets"
+	return &tsList, "Successfully fetched users timesheets"
 }
 
 func (t *TimesheetRepo) CreateTimesheet(timesheet types.Timesheet) (ts *types.Timesheet, msg string) {
@@ -90,4 +91,25 @@ func (t *TimesheetRepo) DeleteTimesheet(id int) (ts *[]types.Timesheet, msg stri
 		}
 	}
 	return nil, "Timesheet with given id doesn't exist"
+}
+
+func (t *TimesheetRepo) GetTimesheetWithinRange(
+	id int, start, end time.Time,
+	)(
+		ts *[]types.Timesheet, msg string,
+){
+	tsById, _ := t.GetTimesheetsByEmployeeId(id)
+	fmt.Println(len(*tsById))
+
+	tss := make([]types.Timesheet, 0)
+	start = start.AddDate(0, 0, -1)
+	end = end.AddDate(0, 0, 1)
+
+	for _, t := range *tsById {
+		if t.Date.After(start) && t.Date.Before(end) {
+			tss = append(tss, t)
+		}
+	}
+
+	return &tss, "Successfully fetched timesheets"
 }
