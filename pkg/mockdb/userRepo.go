@@ -16,8 +16,8 @@ var users = []types.User{
 		LastName:     "Marsh",
 		Email:        "robbieLad@outlook.com",
 		PasswordHash: "blsbdjksd65452",
-		CreatedAt:    time.Now(),
-		ModifiedAt:   time.Now(),
+		CreatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
+		ModifiedAt:   time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
 	},
 	{
 		Uid:          1,
@@ -26,8 +26,8 @@ var users = []types.User{
 		LastName:     "March",
 		Email:        "ronDawg@outlook.com",
 		PasswordHash: "kjbslkbsdk6+23",
-		CreatedAt:    time.Now(),
-		ModifiedAt:   time.Now(),
+		CreatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
+		ModifiedAt:   time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
 	},
 }
 

@@ -19,8 +19,8 @@ func TestGetUserData(t *testing.T) {
 		LastName:     "Marsh",
 		Email:        "robbieLad@outlook.com",
 		PasswordHash: "blsbdjksd65452",
-		CreatedAt:    time.Now(),
-		ModifiedAt:   time.Now(),
+		CreatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
+		ModifiedAt:   time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
 	}
 	ronnie := types.User{
 		Uid:          1,
@@ -29,8 +29,8 @@ func TestGetUserData(t *testing.T) {
 		LastName:     "March",
 		Email:        "ronDawg@outlook.com",
 		PasswordHash: "kjbslkbsdk6+23",
-		CreatedAt:    time.Now(),
-		ModifiedAt:   time.Now(),
+		CreatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
+		ModifiedAt:   time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
 	}
 	data := []types.User{
 		robbie,
@@ -51,8 +51,8 @@ func TestGetUserById(t *testing.T) {
 		LastName:     "Marsh",
 		Email:        "robbieLad@outlook.com",
 		PasswordHash: "blsbdjksd65452",
-		CreatedAt:    time.Now(),
-		ModifiedAt:   time.Now(),
+		CreatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
+		ModifiedAt:   time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
 	}
 
 	// user id in db
@@ -79,8 +79,8 @@ func TestGetUserByEmployeeId(t *testing.T) {
 		LastName:     "Marsh",
 		Email:        "robbieLad@outlook.com",
 		PasswordHash: "blsbdjksd65452",
-		CreatedAt:    time.Now(),
-		ModifiedAt:   time.Now(),
+		CreatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
+		ModifiedAt:   time.Date(1, time.January, 1, 0, 0, 0, 0, time.Local),
 	}
 
 	got, _ := u.GetUserByEmployeeId(000000)

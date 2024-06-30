@@ -8,28 +8,14 @@
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
-    <div class="icon-container">
-        <div class="top-icons">
-            <a href="/clock-on">
-                <div class="icon">
-                    <img src="../static/images/clock.svg" alt="clock icon">
-                    <p>clock on</p>
-                </div>
-            </a>
-            <a href="/leave">
-                <div class="icon">
-                    <img src="../static/images/leave.svg" alt="leave icon">
-                    <p>leave request</p>
-                </div>
-            </a>
-        </div>
-        <div class="bottom-icon">
-            <a href="/profile">
-                <div class="icon">
-                    <img src="../static/images/profile.svg" alt="profile icon">
-                    <p>profile</p>
-                </div>
-            </a>
+    <div class="container">
+        {{ template "header" . }}
+        <div class="nav-content-container">
+            {{ template "nav" . }}
+            {{ template "navmob" . }}
+            <div class="content-container">
+                <h1>content</h1>
+            </div>
         </div>
     </div>
 </body>

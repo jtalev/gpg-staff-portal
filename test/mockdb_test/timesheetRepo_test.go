@@ -9,8 +9,6 @@ import (
 
 var tr = mockdb.TimesheetRepo{}
 
-// todo: test GetTimesheetById
-
 func TestGetTimesheetById(t *testing.T) {
 	ts, msg := tr.GetTimesheetsByEmployeeId(1234567)
 

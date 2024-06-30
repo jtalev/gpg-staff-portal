@@ -1,7 +1,6 @@
 package mockdb
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/jtalev/gpg-staff-portal/pkg/types"
@@ -99,7 +98,6 @@ func (t *TimesheetRepo) GetTimesheetWithinRange(
 		ts *[]types.Timesheet, msg string,
 ){
 	tsById, _ := t.GetTimesheetsByEmployeeId(id)
-	fmt.Println(len(*tsById))
 
 	tss := make([]types.Timesheet, 0)
 	start = start.AddDate(0, 0, -1)
