@@ -12,31 +12,39 @@
         {{ template "header" . }}
         <div class="nav-content-container">
             {{ template "nav" . }}
+            {{ template "navmob" . }}
             <div class="content-container">
-                <div class="ts-yaxis-container">
-                    <p class="y-label">Sunday</p>
-                    <p class="y-label">Monday</p>
-                    <p class="y-label">Tuesday</p>
-                    <p class="y-label">Wednesday</p>
-                    <p class="y-label">Thursday</p>
-                    <p class="y-label">Friday</p>
-                    <p class="y-label">Saturday</p>
-                </div>
-                <div>
-                    <div class="timesheet-header">
-                        <div class="ts-header-item">
-                            <p>Start</p>
+                <div class="page-container">
+                    <section class="user-details-container">
+                        {{ template "user-details" . }}
+                    </section>
+                    <section class="timesheet">
+                        <div class="ts-yaxis-container">
+                            <p class="y-label">Sunday</p>
+                            <p class="y-label">Monday</p>
+                            <p class="y-label">Tuesday</p>
+                            <p class="y-label">Wednesday</p>
+                            <p class="y-label">Thursday</p>
+                            <p class="y-label">Friday</p>
+                            <p class="y-label">Saturday</p>
                         </div>
-                        <div class="ts-header-item">
-                            <p>End</p>
+                        <div>
+                            <div class="timesheet-header">
+                                <div class="ts-header-item">
+                                    <p>Start</p>
+                                </div>
+                                <div class="ts-header-item">
+                                    <p>End</p>
+                                </div>
+                                <div class="ts-header-item">
+                                    <p>Date</p>
+                                </div>
+                            </div>
+                            {{ range .Timesheets }}
+                                {{ template "timesheet" .}}
+                            {{ end }}
                         </div>
-                        <div class="ts-header-item">
-                            <p>Date</p>
-                        </div>
-                    </div>
-                    {{ range .Timesheets }}
-                        {{ template "timesheet" .}}
-                    {{ end }}
+                    </section>
                 </div>
             </div>
         </div>

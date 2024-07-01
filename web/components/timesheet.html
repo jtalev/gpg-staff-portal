@@ -1,8 +1,8 @@
 {{ define "timesheet" }}
 <form class="timesheet-container" hx-post="/timesheet/create">
-    <input type="time" id="start" name="start"><br>
-    <input type="time" id="end" name="end"><br>
-    <input type="date" id="date" name="date">
+    <input class="ts-input" type="time" id="start" name="start"><br>
+    <input class="ts-input" type="time" id="end" name="end"><br>
+    <input class="ts-input" type="date" id="date" name="date">
     <button type="submit">Save</button>
 </form>
 {{ end }}

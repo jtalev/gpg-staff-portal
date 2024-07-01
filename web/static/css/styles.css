@@ -83,7 +83,7 @@ a {
     padding: 2em 1em 2em 2em;
     row-gap: 1.5em;
 
-    background-color: #1d1c1d;
+    background-color: #222222;
 }
 
 .navmob {
@@ -92,7 +92,7 @@ a {
 
 .nav-item {
     width: fit-content;
-    color: #e7e9ea;
+    color: #f1f1f1;
     opacity: 1;
     transition: 0.3s;
 }
@@ -120,12 +120,13 @@ a {
     width: 100%;
     background-color: #f7f7f7;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    border: #1d1c1d;
-    border-style: solid;
-    border-width: 2px;
+    border-top: #1d1c1d;
+    border-top-style: solid;
+    border-top-width: 2px;
 }
 
 .logout-btn {
@@ -139,7 +140,7 @@ a {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    column-gap: 2em;
+    column-gap: 0.5em;
 }
 
 .timesheet-header {
@@ -167,6 +168,30 @@ a {
 .y-label {
     display: flex;
     margin-left: auto;
+}
+.timesheet {
+    display: flex;
+}
+
+.user-details-container {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.user-details {
+    width: 100%;
+    height: 100%;
+}
+
+.mobile-clock-on-container {
+    display: none;
+}
+
+.page-container {
+    width: 80%;
+    height: 90%;
 }
 
 @media screen and (max-width: 900px) {
@@ -262,5 +287,18 @@ a {
 
     .content-container.open {
         display: none;
+    }
+}
+
+@media screen and (max-width: 710px) {
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ts-input {
+        width: 3em;
     }
 }
